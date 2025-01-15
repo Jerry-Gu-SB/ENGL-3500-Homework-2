@@ -27,86 +27,101 @@ You see a gun holster peeking out from his waist.
     ->resists_or_give_up_2
     
 == resist_or_give_up ==
-* "Hell no, I'm not playing your sick, twisted game. Get the hell away from me."
++ "Hell no, I'm not playing your sick, twisted game. Get the hell away from me."
     He smoothly points a gun against my head, his hand showing no hint of hesitation or fear.
     "I'm afraid I must insist." 
     -> resists_or_give_up_2 
-* "Alright fine, I'll play."
++ "Alright fine, I'll play."
     "Great!" Exclaims the strange man. "Let's play!"
     -> RPS
     
 == resists_or_give_up_2 ==
-* [Try a move you saw in a movie once.]
++ "Jesus Christ, fine, I'll play." 
+    -> RPS
+    
++ [Try to stand up as quickly as possible.]
     He shoots you the instant you move, Han Solo style. 
     -> END
 
-* "Jesus Christ, fine, I'll play." 
-    -> RPS
-
 == RPS ==
+VAR rps_count = 0
+VAR man_move = 0
+~ man_move = RANDOM(1,3) // # 1 == rock, 2 == paper, 3 == scissors
+
 "Rock,"
 "Paper,"
 "Scissors!"
 
-VAR man_move = 0
-~ man_move = RANDOM(1,3) // # 1 == rock, 2 == paper, 3 == scissors
-
-* [Throw Rock]
++ Throw Rock
     { man_move:
     - 1: The strange man's fist doesn't move an inch, and holds still just above his elbow height. He's thrown rock as well.
-    -> RPS_TIE
+        -> RPS_TIE
     
     - 2: The strange man holds an open palm, showing paper.
-    -> RPS_LOSS
+        -> RPS_LOSS
     
     - 3: The strange man's index and middle finger shoot out, showing scissors.
-    -> RPS_WIN
+        -> RPS_WIN
     }
-* [Throw Paper]
++ Throw Paper
     { man_move:
     - 1: The strange man's fist doesn't move an inch, and holds still just above his elbow height. He's thrown rock.
-    -> RPS_WIN
+        -> RPS_WIN
     
     - 2: The strange man holds an open palm, showing paper as well.
-    -> RPS_TIE
+        -> RPS_TIE
     
     - 3: The strange man's index and middle finger shoot out, showing scissors.
         He uses his scissors to give your hand a little slice between his index and middle finger.
-    -> RPS_LOSS
+        -> RPS_LOSS
     }
-* [Throw Scissors]
++ Throw Scissors
     { man_move:
     - 1: The strange man's fist doesn't move an inch, and holds still just above his elbow height. He's thrown rock.
-    -> RPS_LOSS
+        -> RPS_LOSS
     
     - 2: The strange man holds an open palm almost like a knife, showing paper.
-    -> RPS_WIN
+        -> RPS_WIN
     
     - 3: The strange man's index and middle finger shoot out, showing scissors.
-    -> RPS_TIE
+        -> RPS_TIE
     }
 
 == RPS_LOSS ==
     A smile creeps across his face.
     "Too bad for you! I guess it's time for you to pay the price!
+    
++ "Can I play again please?" 
+    "Why of course. 
+    
+    {rps_count > 0:
+        You've lost { rps_count } times already, but I'll give you one more chance.
+    - else:
+        That was but one game, let's see who can win the next!
+    }
+    -> speechless
+
++ "Fair enough, do your worst."
+    
     { speechless or resist_or_give_up: 
         He pulls the trigger, and a miniature bouquet of flowers pops out of the pistol.
     }
-    "Just kidding!"
-    "Thank you for playing! What a fun game, with fun stakes!"
-    "I hope you enjoyed. Tata~~"
+    "Haha, I'm just kidding, you didn't need to do all of that!
+    Thank you for playing, what a fun game, with fun stakes!
+    "I hope you enjoyed, bye bye now~~"
     He stands up as the train approaches, and jumps off the platform, only to disappear.
     You resolve to yourself to get enough sleep tonight.
     -> END
 
 == RPS_TIE ==
+    "It's a tie!"
     The man is clearly delighted at the sight.
-    "It's a tie! Shall we play again?"
+    "Wonderful! Shall we play again?"
     -> resists_or_give_up_2
     
 == RPS_WIN
     You feel a strange sense of relief wash over you.
-    "You won!" Great job!
+    "You won, great job!"
     The strange man stands up as the train arrives.
     You begin standing up in protest, but it's too late.
     The man jumps off the platform and disappears into thin air, no sign of his locamotive demise in sight.
