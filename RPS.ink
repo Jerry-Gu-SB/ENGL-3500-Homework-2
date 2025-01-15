@@ -1,3 +1,4 @@
+~ SEED_RANDOM(42)
 NEW YORK, 4:12 AM
 You waiting for the subway on a fringe stop.
 The subway station is empty.
@@ -20,10 +21,10 @@ A strange man comes up to me in a subway after work.
     
 == speechless ==
 You see a gun holster peeking out from his waist.
-* [Go along with his game]
++ [Go along with his game]
     "Fine, I'll play." 
     -> RPS
-* [Reconsider your options] 
++ [Reconsider your options] 
     ->resists_or_give_up_2
     
 == resist_or_give_up ==
@@ -45,6 +46,7 @@ You see a gun holster peeking out from his waist.
 
 == RPS ==
 VAR rps_count = 0
+~ rps_count = rps_count + 1
 VAR man_move = 0
 ~ man_move = RANDOM(1,3) // # 1 == rock, 2 == paper, 3 == scissors
 
@@ -92,12 +94,12 @@ VAR man_move = 0
     "Too bad for you! I guess it's time for you to pay the price!
     
 + "Can I play again please?" 
-    "Why of course. 
+    "Why of course, 
     
-    {rps_count > 0:
-        You've lost { rps_count } times already, but I'll give you one more chance.
+    {rps_count > 1:
+        you've lost { rps_count } times already, but I'll give you one more chance.
     - else:
-        That was but one game, let's see who can win the next!
+        that was but one game, let's see who can win the next!"
     }
     -> speechless
 
@@ -123,7 +125,11 @@ VAR man_move = 0
     You feel a strange sense of relief wash over you.
     "You won, great job!"
     The strange man stands up as the train arrives.
-    You begin standing up in protest, but it's too late.
+    { rps_count > 1:
+        "It may have taken {rps_count} times, but fair's fair. I'll be going now!"
+    }
+    You begin standing up to stop him, but it's too late.
     The man jumps off the platform and disappears into thin air, no sign of his locamotive demise in sight.
+    "Tata~~~"
     You resolve yourself to get a coffee and a good night's sleep tonight.
     -> END
